@@ -1,0 +1,1799 @@
+ARM GAS  E:\diploma mpt\Final Codes\T'x\ADCKBDLCD.asm 			page 1
+
+
+   1              	.file 1 "ADCKBDLCD.c"
+   2              	
+   3              		.global ADC_init
+   4              	
+   5              		.text
+   6              		@------------- locals ---------------------
+   7              	
+   8              		.p2align 2
+   9              	
+  10              		.text
+  11              	ADC_init:
+  12 0000 0DC0A0E1 		mov	R12, sp
+  13 0004 70582DE9 		stmfd	sp!, {R4, R5, R6, R11, R12, lr}
+  14 0008 0DB0A0E1 		mov R11,R13
+  15              	
+  16              	@line 159,0	{
+  17              	
+  18              	.loc 1 159 0
+  19              	
+  20              	@line 161,0	PINSEL1|=0x01000005;
+  21              	
+  22              	.loc 1 161 0
+  23 000c 20409FE5 		ldr	R4, LIT.ADC_init0+0
+  24 0010 005094E5 		ldr	R5,[R4]
+  25 0014 1C609FE5 		ldr	R6, LIT.ADC_init0+4
+  26 0018 065085E1 		orr R5, R5, R6
+  27 001c 005084E5 		str	R5, [R4]
+  28              	
+  29              	@line 162,0	SmallDelay();
+  30              	
+  31              	.loc 1 162 0
+  32 0020 FEFFFFEB 		bl	SmallDelay
+  33              	
+  34              	@line 163,0	AD0CR=0x0025a502;
+  35              	
+  36              	.loc 1 163 0
+  37 0024 10409FE5 		ldr	R4, LIT.ADC_init0+8
+  38 0028 10509FE5 		ldr	R5, LIT.ADC_init0+12
+  39 002c 005084E5 		str	R5, [R4]
+  40              	
+  41              	@line 165,0	}
+  42              	
+  43              	.loc 1 165 0
+  44              	L.1:
+  45 0030 70A89BE8 		ldmfd	R11, {R4, R5, R6, R11, sp, pc}
+  46              	
+  47              		.p2align 2
+  48              	LIT.ADC_init0:
+  49 0034 04C002E0 		.word 0xE002C004
+  50 0038 05000001 		.word 0x1000005
+  51 003c 004003E0 		.word 0xE0034000
+  52 0040 02A52500 		.word 0x25A502
+  53              	
+  54              	
+  55              	
+  56              		.global ADC
+  57              	
+ARM GAS  E:\diploma mpt\Final Codes\T'x\ADCKBDLCD.asm 			page 2
+
+
+  58              		.p2align 2
+  59              	
+  60              		.text
+  61              	ADC:
+  62 0044 0DC0A0E1 		mov	R12, sp
+  63 0048 30582DE9 		stmfd	sp!, {R4, R5, R11, R12, lr}
+  64 004c 0DB0A0E1 		mov R11,R13
+  65              	
+  66              	@line 167,0	{
+  67              	
+  68              	.loc 1 167 0
+  69              	L.3:
+  70              	
+  71              	@line 173,0	{
+  72              	
+  73              	.loc 1 173 0
+  74              	
+  75              	@line 175,0	}
+  76              	
+  77              	.loc 1 175 0
+  78              	L.4:
+  79              	
+  80              	@line 172,6	
+  81              	.loc 1 172 6
+  82 0050 40409FE5 		ldr	R4, LIT.ADC0+0
+  83 0054 004094E5 		ldr	R4,[R4]
+  84 0058 0250A0E3 		mov	R5, #2
+  85              	
+  86 005c 054004E0 		and R4, R4, R5
+  87 0060 0050A0E3 		mov	R5, #0
+  88              	
+  89 0064 050054E1 		cmp	R4,R5
+  90 0068 1200000A 		beq	L.3
+  91              	
+  92              	@line 188,7	return (((AD0DR1>>6)&0x000003ff)/4);
+  93              	
+  94              	.loc 1 188 7
+  95 006c 28409FE5 		ldr	R4, LIT.ADC0+4
+  96 0070 004094E5 		ldr	R4,[R4]
+  97 0074 0650A0E3 		mov	R5, #6
+  98              	
+  99 0078 3445A0E1 		mov R4, R4, lsr R5
+ 100 007c FF5FA0E3 		mov	R5, #1020
+ 101 0080 035085E2 		add	R5, R5, #3
+ 102              	
+ 103 0084 054004E0 		and R4, R4, R5
+ 104 0088 0250A0E3 		mov	R5, #2
+ 105              	
+ 106 008c 3445A0E1 		mov R4, R4, lsr R5
+ 107 0090 0400A0E1 		mov	R0, R4
+ 108              	L.2:
+ 109 0094 30A89BE8 		ldmfd	R11, {R4, R5, R11, sp, pc}
+ 110              	
+ 111              		.p2align 2
+ 112              	LIT.ADC0:
+ 113 0098 304003E0 		.word 0xE0034030
+ 114 009c 144003E0 		.word 0xE0034014
+ARM GAS  E:\diploma mpt\Final Codes\T'x\ADCKBDLCD.asm 			page 3
+
+
+ 115              	
+ 116              	
+ 117              	
+ 118              		.global SmallDelay
+ 119              		@------------- locals ---------------------
+ 120              		@i -- R11 - (4)
+ 121              	
+ 122              		.p2align 2
+ 123              	
+ 124              		.text
+ 125              	SmallDelay:
+ 126 00a0 0DC0A0E1 		mov	R12, sp
+ 127 00a4 30582DE9 		stmfd	sp!, {R4, R5, R11, R12, lr}
+ 128 00a8 0DB0A0E1 		mov R11,R13
+ 129 00ac 04D04DE2 		sub	sp, sp, #1 * 4
+ 130              	
+ 131              	@line 201,0	{
+ 132              	
+ 133              	.loc 1 201 0
+ 134              	
+ 135              	@line 204,5		for(i=0;i<100;i++);	
+ 136              	
+ 137              	.loc 1 204 5
+ 138 00b0 0040A0E3 		mov	R4, #0
+ 139              	
+ 140 00b4 04400BE5 		str	R4, [R11, #-4]
+ 141              	L.7:
+ 142              	
+ 143              	@line 204,19	
+ 144              	.loc 1 204 19
+ 145              	L.8:
+ 146              	
+ 147              	@line 204,15	
+ 148              	.loc 1 204 15
+ 149 00b8 04401BE5 		ldr	R4,[R11, #-4]
+ 150 00bc 014084E2 		add	R4, R4, #1
+ 151 00c0 04400BE5 		str	R4, [R11, #-4]
+ 152              	
+ 153              	@line 204,9	
+ 154              	.loc 1 204 9
+ 155 00c4 04401BE5 		ldr	R4,[R11, #-4]
+ 156 00c8 6450A0E3 		mov	R5, #100
+ 157              	
+ 158 00cc 050054E1 		cmp	R4,R5
+ 159 00d0 2C0000BA 		blt	L.7
+ 160              	
+ 161              	@line 205,0	}
+ 162              	
+ 163              	.loc 1 205 0
+ 164              	L.6:
+ 165 00d4 30A89BE8 		ldmfd	R11, {R4, R5, R11, sp, pc}
+ 166              	
+ 167              		.p2align 2
+ 168              	
+ 169              	
+ 170              		.global LcdCmd1
+ 171              		@------------- parameters -----------------
+ARM GAS  E:\diploma mpt\Final Codes\T'x\ADCKBDLCD.asm 			page 4
+
+
+ 172              		@cmd -- R11 - (4)
+ 173              	
+ 174              		.p2align 2
+ 175              	
+ 176              		.text
+ 177              	LcdCmd1:
+ 178 00d8 0DC0A0E1 		mov	R12, sp
+ 179 00dc 31582DE9 		stmfd	sp!, {R0, R4, R5, R11, R12, lr}
+ 180 00e0 04B08DE2 		add R11,R13,#4
+ 181 00e4 04401BE5 		ldr	R4,[R11, #-4]
+ 182 00e8 04404BE5 		strb	R4, [R11, #-4]
+ 183              	
+ 184              	@line 208,0	{
+ 185              	
+ 186              	.loc 1 208 0
+ 187              	
+ 188              	@line 211,5		if (cmd & 0x01)
+ 189              	
+ 190              	.loc 1 211 5
+ 191 00ec 04405BE5 		ldrb	R4,[R11, #-4]
+ 192 00f0 0150A0E3 		mov	R5, #1
+ 193              	
+ 194 00f4 054004E0 		and R4, R4, R5
+ 195 00f8 0050A0E3 		mov	R5, #0
+ 196              	
+ 197 00fc 050054E1 		cmp	R4,R5
+ 198 0100 4300000A 		beq	L.12
+ 199              	
+ 200              	@line 212,0			IO0SET = (1<<15);
+ 201              	
+ 202              	.loc 1 212 0
+ 203 0104 E4409FE5 		ldr	R4, LIT.LcdCmd10+0
+ 204 0108 E4509FE5 		ldr	R5, LIT.LcdCmd10+4
+ 205 010c 005084E5 		str	R5, [R4]
+ 206 0110 460000EA 		b	L.13
+ 207              	L.12:
+ 208              	
+ 209              	@line 214,0			IO0CLR = (1<<15);
+ 210              	
+ 211              	.loc 1 214 0
+ 212 0114 DC409FE5 		ldr	R4, LIT.LcdCmd10+8
+ 213 0118 D4509FE5 		ldr	R5, LIT.LcdCmd10+4
+ 214 011c 005084E5 		str	R5, [R4]
+ 215              	L.13:
+ 216              	
+ 217              	@line 217,5		if (cmd & 0x02)
+ 218              	
+ 219              	.loc 1 217 5
+ 220 0120 04405BE5 		ldrb	R4,[R11, #-4]
+ 221 0124 0250A0E3 		mov	R5, #2
+ 222              	
+ 223 0128 054004E0 		and R4, R4, R5
+ 224 012c 0050A0E3 		mov	R5, #0
+ 225              	
+ 226 0130 050054E1 		cmp	R4,R5
+ 227 0134 5000000A 		beq	L.14
+ 228              	
+ARM GAS  E:\diploma mpt\Final Codes\T'x\ADCKBDLCD.asm 			page 5
+
+
+ 229              	@line 218,0			IO0SET = (1<<17);
+ 230              	
+ 231              	.loc 1 218 0
+ 232 0138 B0409FE5 		ldr	R4, LIT.LcdCmd10+0
+ 233 013c B8509FE5 		ldr	R5, LIT.LcdCmd10+12
+ 234 0140 005084E5 		str	R5, [R4]
+ 235 0144 530000EA 		b	L.15
+ 236              	L.14:
+ 237              	
+ 238              	@line 220,0			IO0CLR = (1<<17);
+ 239              	
+ 240              	.loc 1 220 0
+ 241 0148 A8409FE5 		ldr	R4, LIT.LcdCmd10+8
+ 242 014c A8509FE5 		ldr	R5, LIT.LcdCmd10+12
+ 243 0150 005084E5 		str	R5, [R4]
+ 244              	L.15:
+ 245              	
+ 246              	@line 223,5		if (cmd & 0x04)
+ 247              	
+ 248              	.loc 1 223 5
+ 249 0154 04405BE5 		ldrb	R4,[R11, #-4]
+ 250 0158 0450A0E3 		mov	R5, #4
+ 251              	
+ 252 015c 054004E0 		and R4, R4, R5
+ 253 0160 0050A0E3 		mov	R5, #0
+ 254              	
+ 255 0164 050054E1 		cmp	R4,R5
+ 256 0168 5D00000A 		beq	L.16
+ 257              	
+ 258              	@line 224,0			IO0SET = (1<<22);
+ 259              	
+ 260              	.loc 1 224 0
+ 261 016c 7C409FE5 		ldr	R4, LIT.LcdCmd10+0
+ 262 0170 88509FE5 		ldr	R5, LIT.LcdCmd10+16
+ 263 0174 005084E5 		str	R5, [R4]
+ 264 0178 600000EA 		b	L.17
+ 265              	L.16:
+ 266              	
+ 267              	@line 226,0			IO0CLR = (1<<22);
+ 268              	
+ 269              	.loc 1 226 0
+ 270 017c 74409FE5 		ldr	R4, LIT.LcdCmd10+8
+ 271 0180 78509FE5 		ldr	R5, LIT.LcdCmd10+16
+ 272 0184 005084E5 		str	R5, [R4]
+ 273              	L.17:
+ 274              	
+ 275              	@line 229,5		if (cmd & 0x08)
+ 276              	
+ 277              	.loc 1 229 5
+ 278 0188 04405BE5 		ldrb	R4,[R11, #-4]
+ 279 018c 0850A0E3 		mov	R5, #8
+ 280              	
+ 281 0190 054004E0 		and R4, R4, R5
+ 282 0194 0050A0E3 		mov	R5, #0
+ 283              	
+ 284 0198 050054E1 		cmp	R4,R5
+ 285 019c 6A00000A 		beq	L.18
+ARM GAS  E:\diploma mpt\Final Codes\T'x\ADCKBDLCD.asm 			page 6
+
+
+ 286              	
+ 287              	@line 230,0			IO0SET = (1<<30);
+ 288              	
+ 289              	.loc 1 230 0
+ 290 01a0 48409FE5 		ldr	R4, LIT.LcdCmd10+0
+ 291 01a4 58509FE5 		ldr	R5, LIT.LcdCmd10+20
+ 292 01a8 005084E5 		str	R5, [R4]
+ 293 01ac 6D0000EA 		b	L.19
+ 294              	L.18:
+ 295              	
+ 296              	@line 232,0			IO0CLR = (1<<30);
+ 297              	
+ 298              	.loc 1 232 0
+ 299 01b0 40409FE5 		ldr	R4, LIT.LcdCmd10+8
+ 300 01b4 48509FE5 		ldr	R5, LIT.LcdCmd10+20
+ 301 01b8 005084E5 		str	R5, [R4]
+ 302              	L.19:
+ 303              	
+ 304              	@line 235,0		IO1CLR = 0x03000000  ;	// CLEAR(0) RS and EN 
+ 305              	
+ 306              	.loc 1 235 0
+ 307 01bc 44409FE5 		ldr	R4, LIT.LcdCmd10+24
+ 308 01c0 44509FE5 		ldr	R5, LIT.LcdCmd10+28
+ 309 01c4 005084E5 		str	R5, [R4]
+ 310              	
+ 311              	@line 236,1		SmallDelay() ;
+ 312              	
+ 313              	.loc 1 236 1
+ 314 01c8 FEFFFFEB 		bl	SmallDelay
+ 315              	
+ 316              	@line 238,0		IO1SET = 0x01000000  ;	// SET(1) EN 
+ 317              	
+ 318              	.loc 1 238 0
+ 319 01cc 3C409FE5 		ldr	R4, LIT.LcdCmd10+32
+ 320 01d0 3C509FE5 		ldr	R5, LIT.LcdCmd10+36
+ 321 01d4 005084E5 		str	R5, [R4]
+ 322              	
+ 323              	@line 240,1		SmallDelay() ;
+ 324              	
+ 325              	.loc 1 240 1
+ 326 01d8 FEFFFFEB 		bl	SmallDelay
+ 327              	
+ 328              	@line 242,0		IO1CLR = 0x01000000  ;	// CLEAR(0) EN 
+ 329              	
+ 330              	.loc 1 242 0
+ 331 01dc 24409FE5 		ldr	R4, LIT.LcdCmd10+24
+ 332 01e0 2C509FE5 		ldr	R5, LIT.LcdCmd10+36
+ 333 01e4 005084E5 		str	R5, [R4]
+ 334              	
+ 335              	@line 244,1		SmallDelay() ;
+ 336              	
+ 337              	.loc 1 244 1
+ 338 01e8 FEFFFFEB 		bl	SmallDelay
+ 339              	
+ 340              	@line 245,0	}
+ 341              	
+ 342              	.loc 1 245 0
+ARM GAS  E:\diploma mpt\Final Codes\T'x\ADCKBDLCD.asm 			page 7
+
+
+ 343              	L.11:
+ 344 01ec 30A89BE8 		ldmfd	R11, {R4, R5, R11, sp, pc}
+ 345              	
+ 346              		.p2align 2
+ 347              	LIT.LcdCmd10:
+ 348 01f0 048002E0 		.word 0xE0028004
+ 349 01f4 00800000 		.word 0x8000
+ 350 01f8 0C8002E0 		.word 0xE002800C
+ 351 01fc 00000200 		.word 0x20000
+ 352 0200 00004000 		.word 0x400000
+ 353 0204 00000040 		.word 0x40000000
+ 354 0208 1C8002E0 		.word 0xE002801C
+ 355 020c 00000003 		.word 0x3000000
+ 356 0210 148002E0 		.word 0xE0028014
+ 357 0214 00000001 		.word 0x1000000
+ 358              	
+ 359              	
+ 360              	
+ 361              		.global LcdDat1
+ 362              		@------------- parameters -----------------
+ 363              		@dat -- R11 - (4)
+ 364              	
+ 365              		.p2align 2
+ 366              	
+ 367              		.text
+ 368              	LcdDat1:
+ 369 0218 0DC0A0E1 		mov	R12, sp
+ 370 021c 31582DE9 		stmfd	sp!, {R0, R4, R5, R11, R12, lr}
+ 371 0220 04B08DE2 		add R11,R13,#4
+ 372 0224 04401BE5 		ldr	R4,[R11, #-4]
+ 373 0228 04404BE5 		strb	R4, [R11, #-4]
+ 374              	
+ 375              	@line 248,0	{
+ 376              	
+ 377              	.loc 1 248 0
+ 378              	
+ 379              	@line 250,5		if (dat & 0x01)
+ 380              	
+ 381              	.loc 1 250 5
+ 382 022c 04405BE5 		ldrb	R4,[R11, #-4]
+ 383 0230 0150A0E3 		mov	R5, #1
+ 384              	
+ 385 0234 054004E0 		and R4, R4, R5
+ 386 0238 0050A0E3 		mov	R5, #0
+ 387              	
+ 388 023c 050054E1 		cmp	R4,R5
+ 389 0240 9300000A 		beq	L.21
+ 390              	
+ 391              	@line 251,0			IO0SET = (1<<15);
+ 392              	
+ 393              	.loc 1 251 0
+ 394 0244 F4409FE5 		ldr	R4, LIT.LcdDat10+0
+ 395 0248 F4509FE5 		ldr	R5, LIT.LcdDat10+4
+ 396 024c 005084E5 		str	R5, [R4]
+ 397 0250 960000EA 		b	L.22
+ 398              	L.21:
+ 399              	
+ARM GAS  E:\diploma mpt\Final Codes\T'x\ADCKBDLCD.asm 			page 8
+
+
+ 400              	@line 253,0			IO0CLR = (1<<15);
+ 401              	
+ 402              	.loc 1 253 0
+ 403 0254 EC409FE5 		ldr	R4, LIT.LcdDat10+8
+ 404 0258 E4509FE5 		ldr	R5, LIT.LcdDat10+4
+ 405 025c 005084E5 		str	R5, [R4]
+ 406              	L.22:
+ 407              	
+ 408              	@line 256,5		if (dat & 0x02)
+ 409              	
+ 410              	.loc 1 256 5
+ 411 0260 04405BE5 		ldrb	R4,[R11, #-4]
+ 412 0264 0250A0E3 		mov	R5, #2
+ 413              	
+ 414 0268 054004E0 		and R4, R4, R5
+ 415 026c 0050A0E3 		mov	R5, #0
+ 416              	
+ 417 0270 050054E1 		cmp	R4,R5
+ 418 0274 A000000A 		beq	L.23
+ 419              	
+ 420              	@line 257,0			IO0SET = (1<<17);
+ 421              	
+ 422              	.loc 1 257 0
+ 423 0278 C0409FE5 		ldr	R4, LIT.LcdDat10+0
+ 424 027c C8509FE5 		ldr	R5, LIT.LcdDat10+12
+ 425 0280 005084E5 		str	R5, [R4]
+ 426 0284 A30000EA 		b	L.24
+ 427              	L.23:
+ 428              	
+ 429              	@line 259,0			IO0CLR = (1<<17);
+ 430              	
+ 431              	.loc 1 259 0
+ 432 0288 B8409FE5 		ldr	R4, LIT.LcdDat10+8
+ 433 028c B8509FE5 		ldr	R5, LIT.LcdDat10+12
+ 434 0290 005084E5 		str	R5, [R4]
+ 435              	L.24:
+ 436              	
+ 437              	@line 262,5		if (dat & 0x04)
+ 438              	
+ 439              	.loc 1 262 5
+ 440 0294 04405BE5 		ldrb	R4,[R11, #-4]
+ 441 0298 0450A0E3 		mov	R5, #4
+ 442              	
+ 443 029c 054004E0 		and R4, R4, R5
+ 444 02a0 0050A0E3 		mov	R5, #0
+ 445              	
+ 446 02a4 050054E1 		cmp	R4,R5
+ 447 02a8 AD00000A 		beq	L.25
+ 448              	
+ 449              	@line 263,0			IO0SET = (1<<22);
+ 450              	
+ 451              	.loc 1 263 0
+ 452 02ac 8C409FE5 		ldr	R4, LIT.LcdDat10+0
+ 453 02b0 98509FE5 		ldr	R5, LIT.LcdDat10+16
+ 454 02b4 005084E5 		str	R5, [R4]
+ 455 02b8 B00000EA 		b	L.26
+ 456              	L.25:
+ARM GAS  E:\diploma mpt\Final Codes\T'x\ADCKBDLCD.asm 			page 9
+
+
+ 457              	
+ 458              	@line 265,0			IO0CLR = (1<<22);
+ 459              	
+ 460              	.loc 1 265 0
+ 461 02bc 84409FE5 		ldr	R4, LIT.LcdDat10+8
+ 462 02c0 88509FE5 		ldr	R5, LIT.LcdDat10+16
+ 463 02c4 005084E5 		str	R5, [R4]
+ 464              	L.26:
+ 465              	
+ 466              	@line 268,5		if (dat & 0x08)
+ 467              	
+ 468              	.loc 1 268 5
+ 469 02c8 04405BE5 		ldrb	R4,[R11, #-4]
+ 470 02cc 0850A0E3 		mov	R5, #8
+ 471              	
+ 472 02d0 054004E0 		and R4, R4, R5
+ 473 02d4 0050A0E3 		mov	R5, #0
+ 474              	
+ 475 02d8 050054E1 		cmp	R4,R5
+ 476 02dc BA00000A 		beq	L.27
+ 477              	
+ 478              	@line 269,0			IO0SET = (1<<30);
+ 479              	
+ 480              	.loc 1 269 0
+ 481 02e0 58409FE5 		ldr	R4, LIT.LcdDat10+0
+ 482 02e4 68509FE5 		ldr	R5, LIT.LcdDat10+20
+ 483 02e8 005084E5 		str	R5, [R4]
+ 484 02ec BD0000EA 		b	L.28
+ 485              	L.27:
+ 486              	
+ 487              	@line 271,0			IO0CLR = (1<<30);
+ 488              	
+ 489              	.loc 1 271 0
+ 490 02f0 50409FE5 		ldr	R4, LIT.LcdDat10+8
+ 491 02f4 58509FE5 		ldr	R5, LIT.LcdDat10+20
+ 492 02f8 005084E5 		str	R5, [R4]
+ 493              	L.28:
+ 494              	
+ 495              	@line 274,0		IO1SET = 0x02000000  ;	// SET(1) RS 
+ 496              	
+ 497              	.loc 1 274 0
+ 498 02fc 54409FE5 		ldr	R4, LIT.LcdDat10+24
+ 499 0300 54509FE5 		ldr	R5, LIT.LcdDat10+28
+ 500 0304 005084E5 		str	R5, [R4]
+ 501              	
+ 502              	@line 276,1		SmallDelay() ;
+ 503              	
+ 504              	.loc 1 276 1
+ 505 0308 FEFFFFEB 		bl	SmallDelay
+ 506              	
+ 507              	@line 278,0		IO1CLR = 0x01000000  ;	// CLEAR(0) EN 
+ 508              	
+ 509              	.loc 1 278 0
+ 510 030c 4C409FE5 		ldr	R4, LIT.LcdDat10+32
+ 511 0310 4C509FE5 		ldr	R5, LIT.LcdDat10+36
+ 512 0314 005084E5 		str	R5, [R4]
+ 513              	
+ARM GAS  E:\diploma mpt\Final Codes\T'x\ADCKBDLCD.asm 			page 10
+
+
+ 514              	@line 280,1		SmallDelay() ;	
+ 515              	
+ 516              	.loc 1 280 1
+ 517 0318 FEFFFFEB 		bl	SmallDelay
+ 518              	
+ 519              	@line 282,0		IO1SET = 0x01000000  ;	// SET(1) EN 
+ 520              	
+ 521              	.loc 1 282 0
+ 522 031c 34409FE5 		ldr	R4, LIT.LcdDat10+24
+ 523 0320 3C509FE5 		ldr	R5, LIT.LcdDat10+36
+ 524 0324 005084E5 		str	R5, [R4]
+ 525              	
+ 526              	@line 284,1		SmallDelay() ;
+ 527              	
+ 528              	.loc 1 284 1
+ 529 0328 FEFFFFEB 		bl	SmallDelay
+ 530              	
+ 531              	@line 286,0		IO1CLR = 0x01000000  ;	// CLEAR(0) EN 
+ 532              	
+ 533              	.loc 1 286 0
+ 534 032c 2C409FE5 		ldr	R4, LIT.LcdDat10+32
+ 535 0330 2C509FE5 		ldr	R5, LIT.LcdDat10+36
+ 536 0334 005084E5 		str	R5, [R4]
+ 537              	
+ 538              	@line 288,1		SmallDelay() ;	
+ 539              	
+ 540              	.loc 1 288 1
+ 541 0338 FEFFFFEB 		bl	SmallDelay
+ 542              	
+ 543              	@line 289,0	}
+ 544              	
+ 545              	.loc 1 289 0
+ 546              	L.20:
+ 547 033c 30A89BE8 		ldmfd	R11, {R4, R5, R11, sp, pc}
+ 548              	
+ 549              		.p2align 2
+ 550              	LIT.LcdDat10:
+ 551 0340 048002E0 		.word 0xE0028004
+ 552 0344 00800000 		.word 0x8000
+ 553 0348 0C8002E0 		.word 0xE002800C
+ 554 034c 00000200 		.word 0x20000
+ 555 0350 00004000 		.word 0x400000
+ 556 0354 00000040 		.word 0x40000000
+ 557 0358 148002E0 		.word 0xE0028014
+ 558 035c 00000002 		.word 0x2000000
+ 559 0360 1C8002E0 		.word 0xE002801C
+ 560 0364 00000001 		.word 0x1000000
+ 561              	
+ 562              	
+ 563              	
+ 564              		.global Delay250
+ 565              		@------------- locals ---------------------
+ 566              		@j -- R11 - (8)
+ 567              		@k -- R11 - (4)
+ 568              	
+ 569              		.p2align 2
+ 570              	
+ARM GAS  E:\diploma mpt\Final Codes\T'x\ADCKBDLCD.asm 			page 11
+
+
+ 571              		.text
+ 572              	Delay250:
+ 573 0368 0DC0A0E1 		mov	R12, sp
+ 574 036c 30582DE9 		stmfd	sp!, {R4, R5, R11, R12, lr}
+ 575 0370 0DB0A0E1 		mov R11,R13
+ 576 0374 08D04DE2 		sub	sp, sp, #2 * 4
+ 577              	
+ 578              	@line 291,0	{
+ 579              	
+ 580              	.loc 1 291 0
+ 581              	
+ 582              	@line 293,1		j =200 ;
+ 583              	
+ 584              	.loc 1 293 1
+ 585 0378 C840A0E3 		mov	R4, #200
+ 586              	
+ 587 037c 08400BE5 		str	R4, [R11, #-8]
+ 588              	
+ 589              	@line 294,5		for(k = 0 ; k < 100 ; k ++)
+ 590              	
+ 591              	.loc 1 294 5
+ 592 0380 0040A0E3 		mov	R4, #0
+ 593              	
+ 594 0384 04400BE5 		str	R4, [R11, #-4]
+ 595              	L.30:
+ 596              	
+ 597              	@line 295,1		{
+ 598              	
+ 599              	.loc 1 295 1
+ 600              	
+ 601              	@line 296,2			j-- ;
+ 602              	
+ 603              	.loc 1 296 2
+ 604 0388 08401BE5 		ldr	R4,[R11, #-8]
+ 605 038c 014044E2 		sub	R4, R4, #1
+ 606 0390 08400BE5 		str	R4, [R11, #-8]
+ 607              	
+ 608              	@line 297,1		}
+ 609              	
+ 610              	.loc 1 297 1
+ 611              	L.31:
+ 612              	
+ 613              	@line 294,23	
+ 614              	.loc 1 294 23
+ 615 0394 04401BE5 		ldr	R4,[R11, #-4]
+ 616 0398 014084E2 		add	R4, R4, #1
+ 617 039c 04400BE5 		str	R4, [R11, #-4]
+ 618              	
+ 619              	@line 294,13	
+ 620              	.loc 1 294 13
+ 621 03a0 04401BE5 		ldr	R4,[R11, #-4]
+ 622 03a4 6450A0E3 		mov	R5, #100
+ 623              	
+ 624 03a8 050054E1 		cmp	R4,R5
+ 625 03ac E00000BA 		blt	L.30
+ 626              	
+ 627              	@line 298,0	}
+ARM GAS  E:\diploma mpt\Final Codes\T'x\ADCKBDLCD.asm 			page 12
+
+
+ 628              	
+ 629              	.loc 1 298 0
+ 630              	L.29:
+ 631 03b0 30A89BE8 		ldmfd	R11, {R4, R5, R11, sp, pc}
+ 632              	
+ 633              		.p2align 2
+ 634              	
+ 635              	
+ 636              		.global DelayMs
+ 637              		@------------- parameters -----------------
+ 638              		@n -- R11 - (4)
+ 639              		@------------- locals ---------------------
+ 640              		@k -- R11 - (8)
+ 641              	
+ 642              		.p2align 2
+ 643              	
+ 644              		.text
+ 645              	DelayMs:
+ 646 03b4 0DC0A0E1 		mov	R12, sp
+ 647 03b8 31582DE9 		stmfd	sp!, {R0, R4, R5, R11, R12, lr}
+ 648 03bc 04B08DE2 		add R11,R13,#4
+ 649 03c0 04D04DE2 		sub	sp, sp, #1 * 4
+ 650              	
+ 651              	@line 300,0	{
+ 652              	
+ 653              	.loc 1 300 0
+ 654              	
+ 655              	@line 302,5		for(k = 0 ; k < n ; k ++)
+ 656              	
+ 657              	.loc 1 302 5
+ 658 03c4 0040A0E3 		mov	R4, #0
+ 659              	
+ 660 03c8 08400BE5 		str	R4, [R11, #-8]
+ 661 03cc F70000EA 		b	L.38
+ 662              	L.35:
+ 663              	
+ 664              	@line 303,1		{
+ 665              	
+ 666              	.loc 1 303 1
+ 667              	
+ 668              	@line 304,2			Delay250() ;
+ 669              	
+ 670              	.loc 1 304 2
+ 671 03d0 FEFFFFEB 		bl	Delay250
+ 672              	
+ 673              	@line 305,2			Delay250() ;
+ 674              	
+ 675              	.loc 1 305 2
+ 676 03d4 FEFFFFEB 		bl	Delay250
+ 677              	
+ 678              	@line 306,1		}
+ 679              	
+ 680              	.loc 1 306 1
+ 681              	L.36:
+ 682              	
+ 683              	@line 302,21	
+ 684              	.loc 1 302 21
+ARM GAS  E:\diploma mpt\Final Codes\T'x\ADCKBDLCD.asm 			page 13
+
+
+ 685 03d8 08401BE5 		ldr	R4,[R11, #-8]
+ 686 03dc 014084E2 		add	R4, R4, #1
+ 687 03e0 08400BE5 		str	R4, [R11, #-8]
+ 688              	L.38:
+ 689              	
+ 690              	@line 302,13	
+ 691              	.loc 1 302 13
+ 692 03e4 08401BE5 		ldr	R4,[R11, #-8]
+ 693 03e8 04501BE5 		ldr	R5,[R11, #-4]
+ 694 03ec 050054E1 		cmp	R4,R5
+ 695 03f0 F20000BA 		blt	L.35
+ 696              	
+ 697              	@line 307,0	}
+ 698              	
+ 699              	.loc 1 307 0
+ 700              	L.34:
+ 701 03f4 30A89BE8 		ldmfd	R11, {R4, R5, R11, sp, pc}
+ 702              	
+ 703              		.p2align 2
+ 704              	
+ 705              	
+ 706              		.global LcdCmd
+ 707              		@------------- parameters -----------------
+ 708              		@cmd -- R11 - (4)
+ 709              	
+ 710              		.p2align 2
+ 711              	
+ 712              		.text
+ 713              	LcdCmd:
+ 714 03f8 0DC0A0E1 		mov	R12, sp
+ 715 03fc 31582DE9 		stmfd	sp!, {R0, R4, R5, R11, R12, lr}
+ 716 0400 04B08DE2 		add R11,R13,#4
+ 717 0404 04D04DE2 		sub	sp, sp, #1 * 4
+ 718 0408 04401BE5 		ldr	R4,[R11, #-4]
+ 719 040c 04404BE5 		strb	R4, [R11, #-4]
+ 720              	
+ 721              	@line 309,0	{
+ 722              	
+ 723              	.loc 1 309 0
+ 724              	
+ 725              	@line 310,1		LcdCmd1(cmd >> 4) ;
+ 726              	
+ 727              	.loc 1 310 1
+ 728 0410 04405BE5 		ldrb	R4,[R11, #-4]
+ 729 0414 0450A0E3 		mov	R5, #4
+ 730              	
+ 731 0418 5445A0E1 		mov R4, R4, asr R5
+ 732 041c FF0004E2 		and	R0,R4,#255
+ 733 0420 FEFFFFEB 		bl	LcdCmd1
+ 734              	
+ 735              	@line 311,1		LcdCmd1(cmd) ;
+ 736              	
+ 737              	.loc 1 311 1
+ 738 0424 04005BE5 		ldrb	R0,[R11, #-4]
+ 739 0428 FEFFFFEB 		bl	LcdCmd1
+ 740              	
+ 741              	@line 312,1		Delay250() ;
+ARM GAS  E:\diploma mpt\Final Codes\T'x\ADCKBDLCD.asm 			page 14
+
+
+ 742              	
+ 743              	.loc 1 312 1
+ 744 042c FEFFFFEB 		bl	Delay250
+ 745              	
+ 746              	@line 313,1		Delay250() ;
+ 747              	
+ 748              	.loc 1 313 1
+ 749 0430 FEFFFFEB 		bl	Delay250
+ 750              	
+ 751              	@line 314,0	}
+ 752              	
+ 753              	.loc 1 314 0
+ 754              	L.39:
+ 755 0434 30A89BE8 		ldmfd	R11, {R4, R5, R11, sp, pc}
+ 756              	
+ 757              		.p2align 2
+ 758              	
+ 759              	
+ 760              		.global LcdDat
+ 761              		@------------- parameters -----------------
+ 762              		@dat -- R11 - (4)
+ 763              	
+ 764              		.p2align 2
+ 765              	
+ 766              		.text
+ 767              	LcdDat:
+ 768 0438 0DC0A0E1 		mov	R12, sp
+ 769 043c 31582DE9 		stmfd	sp!, {R0, R4, R5, R11, R12, lr}
+ 770 0440 04B08DE2 		add R11,R13,#4
+ 771 0444 04D04DE2 		sub	sp, sp, #1 * 4
+ 772 0448 04401BE5 		ldr	R4,[R11, #-4]
+ 773 044c 04404BE5 		strb	R4, [R11, #-4]
+ 774              	
+ 775              	@line 316,0	{
+ 776              	
+ 777              	.loc 1 316 0
+ 778              	
+ 779              	@line 317,1		LcdDat1(dat >> 4) ;
+ 780              	
+ 781              	.loc 1 317 1
+ 782 0450 04405BE5 		ldrb	R4,[R11, #-4]
+ 783 0454 0450A0E3 		mov	R5, #4
+ 784              	
+ 785 0458 5445A0E1 		mov R4, R4, asr R5
+ 786 045c FF0004E2 		and	R0,R4,#255
+ 787 0460 FEFFFFEB 		bl	LcdDat1
+ 788              	
+ 789              	@line 318,1		LcdDat1(dat) ;
+ 790              	
+ 791              	.loc 1 318 1
+ 792 0464 04005BE5 		ldrb	R0,[R11, #-4]
+ 793 0468 FEFFFFEB 		bl	LcdDat1
+ 794              	
+ 795              	@line 319,1		Delay250() ;
+ 796              	
+ 797              	.loc 1 319 1
+ 798 046c FEFFFFEB 		bl	Delay250
+ARM GAS  E:\diploma mpt\Final Codes\T'x\ADCKBDLCD.asm 			page 15
+
+
+ 799              	
+ 800              	@line 320,1		Delay250() ;
+ 801              	
+ 802              	.loc 1 320 1
+ 803 0470 FEFFFFEB 		bl	Delay250
+ 804              	
+ 805              	@line 321,0	}
+ 806              	
+ 807              	.loc 1 321 0
+ 808              	L.40:
+ 809 0474 30A89BE8 		ldmfd	R11, {R4, R5, R11, sp, pc}
+ 810              	
+ 811              		.p2align 2
+ 812              	
+ 813              	
+ 814              		.global LcdInit
+ 815              		@------------- locals ---------------------
+ 816              	
+ 817              		.p2align 2
+ 818              	
+ 819              		.text
+ 820              	LcdInit:
+ 821 0478 0DC0A0E1 		mov	R12, sp
+ 822 047c 70582DE9 		stmfd	sp!, {R4, R5, R6, R11, R12, lr}
+ 823 0480 0DB0A0E1 		mov R11,R13
+ 824 0484 04D04DE2 		sub	sp, sp, #1 * 4
+ 825              	
+ 826              	@line 323,0	{
+ 827              	
+ 828              	.loc 1 323 0
+ 829              	
+ 830              	@line 326,0		APBDIV=0x01;
+ 831              	
+ 832              	.loc 1 326 0
+ 833 0488 A4409FE5 		ldr	R4, LIT.LcdInit0+0
+ 834 048c 0150A0E3 		mov	R5, #1
+ 835              	
+ 836 0490 005084E5 		str	R5, [R4]
+ 837              	
+ 838              	@line 328,0		IO1DIR |= 0x03400000  ;		// Configure P1.24(EN) and P1.25(RS) as Output
+ 839              	
+ 840              	.loc 1 328 0
+ 841 0494 9C409FE5 		ldr	R4, LIT.LcdInit0+4
+ 842 0498 005094E5 		ldr	R5,[R4]
+ 843 049c 98609FE5 		ldr	R6, LIT.LcdInit0+8
+ 844 04a0 065085E1 		orr R5, R5, R6
+ 845 04a4 005084E5 		str	R5, [R4]
+ 846              	
+ 847              	@line 329,0		IO1CLR = 0x03000000  ;		// CLEAR(0) P1.24(EN) and P1.25(RS)
+ 848              	
+ 849              	.loc 1 329 0
+ 850 04a8 90409FE5 		ldr	R4, LIT.LcdInit0+12
+ 851 04ac 90509FE5 		ldr	R5, LIT.LcdInit0+16
+ 852 04b0 005084E5 		str	R5, [R4]
+ 853              	
+ 854              	@line 331,0		IO0DIR |= 0x40428000  ;		// Configure P0.15(D4), P0.17(D5), P0.22(D6) and P0.30(D7) as
+ 855              	
+ARM GAS  E:\diploma mpt\Final Codes\T'x\ADCKBDLCD.asm 			page 16
+
+
+ 856              	.loc 1 331 0
+ 857 04b4 8C409FE5 		ldr	R4, LIT.LcdInit0+20
+ 858 04b8 005094E5 		ldr	R5,[R4]
+ 859 04bc 88609FE5 		ldr	R6, LIT.LcdInit0+24
+ 860 04c0 065085E1 		orr R5, R5, R6
+ 861 04c4 005084E5 		str	R5, [R4]
+ 862              	
+ 863              	@line 332,0		IO0CLR = 0x40428000  ;		// CLEAR(0) P0.15(D4), P0.17(D5), P0.22(D6) and P0.30(D7)
+ 864              	
+ 865              	.loc 1 332 0
+ 866 04c8 80409FE5 		ldr	R4, LIT.LcdInit0+28
+ 867 04cc 78509FE5 		ldr	R5, LIT.LcdInit0+24
+ 868 04d0 005084E5 		str	R5, [R4]
+ 869              	
+ 870              	@line 334,1		DelayMs(6) ;
+ 871              	
+ 872              	.loc 1 334 1
+ 873 04d4 0600A0E3 		mov	R0, #6
+ 874              	
+ 875 04d8 FEFFFFEB 		bl	DelayMs
+ 876              	
+ 877              	@line 335,1		LcdCmd1(0x03) ;
+ 878              	
+ 879              	.loc 1 335 1
+ 880 04dc 0300A0E3 		mov	R0, #3
+ 881              	
+ 882 04e0 FEFFFFEB 		bl	LcdCmd1
+ 883              	
+ 884              	@line 337,1		DelayMs(6) ;
+ 885              	
+ 886              	.loc 1 337 1
+ 887 04e4 0600A0E3 		mov	R0, #6
+ 888              	
+ 889 04e8 FEFFFFEB 		bl	DelayMs
+ 890              	
+ 891              	@line 338,1		LcdCmd1(0x03) ;
+ 892              	
+ 893              	.loc 1 338 1
+ 894 04ec 0300A0E3 		mov	R0, #3
+ 895              	
+ 896 04f0 FEFFFFEB 		bl	LcdCmd1
+ 897              	
+ 898              	@line 339,1		Delay250() ;
+ 899              	
+ 900              	.loc 1 339 1
+ 901 04f4 FEFFFFEB 		bl	Delay250
+ 902              	
+ 903              	@line 341,1		LcdCmd1(0x03) ;
+ 904              	
+ 905              	.loc 1 341 1
+ 906 04f8 0300A0E3 		mov	R0, #3
+ 907              	
+ 908 04fc FEFFFFEB 		bl	LcdCmd1
+ 909              	
+ 910              	@line 342,1		Delay250() ;
+ 911              	
+ 912              	.loc 1 342 1
+ARM GAS  E:\diploma mpt\Final Codes\T'x\ADCKBDLCD.asm 			page 17
+
+
+ 913 0500 FEFFFFEB 		bl	Delay250
+ 914              	
+ 915              	@line 344,1		LcdCmd1(0x02) ;
+ 916              	
+ 917              	.loc 1 344 1
+ 918 0504 0200A0E3 		mov	R0, #2
+ 919              	
+ 920 0508 FEFFFFEB 		bl	LcdCmd1
+ 921              	
+ 922              	@line 345,1		Delay250() ;
+ 923              	
+ 924              	.loc 1 345 1
+ 925 050c FEFFFFEB 		bl	Delay250
+ 926              	
+ 927              	@line 348,1		LcdCmd(0x28) ;
+ 928              	
+ 929              	.loc 1 348 1
+ 930 0510 2800A0E3 		mov	R0, #40
+ 931              	
+ 932 0514 FEFFFFEB 		bl	LcdCmd
+ 933              	
+ 934              	@line 349,1		LcdCmd(0x08) ;
+ 935              	
+ 936              	.loc 1 349 1
+ 937 0518 0800A0E3 		mov	R0, #8
+ 938              	
+ 939 051c FEFFFFEB 		bl	LcdCmd
+ 940              	
+ 941              	@line 350,1		LcdCmd(0x0c) ;
+ 942              	
+ 943              	.loc 1 350 1
+ 944 0520 0C00A0E3 		mov	R0, #12
+ 945              	
+ 946 0524 FEFFFFEB 		bl	LcdCmd
+ 947              	
+ 948              	@line 351,1		LcdCmd(0x06) ;
+ 949              	
+ 950              	.loc 1 351 1
+ 951 0528 0600A0E3 		mov	R0, #6
+ 952              	
+ 953 052c FEFFFFEB 		bl	LcdCmd
+ 954              	
+ 955              	@line 353,0	}
+ 956              	
+ 957              	.loc 1 353 0
+ 958              	L.41:
+ 959 0530 70A89BE8 		ldmfd	R11, {R4, R5, R6, R11, sp, pc}
+ 960              	
+ 961              		.p2align 2
+ 962              	LIT.LcdInit0:
+ 963 0534 00C11FE0 		.word 0xE01FC100
+ 964 0538 188002E0 		.word 0xE0028018
+ 965 053c 00004003 		.word 0x3400000
+ 966 0540 1C8002E0 		.word 0xE002801C
+ 967 0544 00000003 		.word 0x3000000
+ 968 0548 088002E0 		.word 0xE0028008
+ 969 054c 00804240 		.word 0x40428000
+ARM GAS  E:\diploma mpt\Final Codes\T'x\ADCKBDLCD.asm 			page 18
+
+
+ 970 0550 0C8002E0 		.word 0xE002800C
+ 971              	
+ 972              	
+ 973              	
+ 974              		.global DisplayRow
+ 975              		@------------- parameters -----------------
+ 976              		@str -- R11 - (4)
+ 977              		@row -- R11 - (8)
+ 978              		@------------- locals ---------------------
+ 979              		@k -- R11 - (12)
+ 980              	
+ 981              		.p2align 2
+ 982              	
+ 983              		.text
+ 984              	DisplayRow:
+ 985 0554 0DC0A0E1 		mov	R12, sp
+ 986 0558 33582DE9 		stmfd	sp!, {R0, R1, R4, R5, R11, R12, lr}
+ 987 055c 08B08DE2 		add R11,R13,#8
+ 988 0560 08D04DE2 		sub	sp, sp, #2 * 4
+ 989              	
+ 990              	@line 355,0	{
+ 991              	
+ 992              	.loc 1 355 0
+ 993              	
+ 994              	@line 362,5		if (row == 1)
+ 995              	
+ 996              	.loc 1 362 5
+ 997 0564 08401BE5 		ldr	R4,[R11, #-8]
+ 998 0568 0150A0E3 		mov	R5, #1
+ 999              	
+ 1000 056c 050054E1 		cmp	R4,R5
+ 1001 0570 5E01001A 		bne	L.43
+ 1002              	
+ 1003              	@line 363,2			LcdCmd(0x80) ;
+ 1004              	
+ 1005              	.loc 1 363 2
+ 1006 0574 8000A0E3 		mov	R0, #128
+ 1007              	
+ 1008 0578 FEFFFFEB 		bl	LcdCmd
+ 1009 057c 600100EA 		b	L.44
+ 1010              	L.43:
+ 1011              	
+ 1012              	@line 365,2			LcdCmd(0xc0) ;
+ 1013              	
+ 1014              	.loc 1 365 2
+ 1015 0580 C000A0E3 		mov	R0, #192
+ 1016              	
+ 1017 0584 FEFFFFEB 		bl	LcdCmd
+ 1018              	L.44:
+ 1019              	
+ 1020              	@line 366,5		for(k = 0 ; k < 16 ; k ++)
+ 1021              	
+ 1022              	.loc 1 366 5
+ 1023 0588 0040A0E3 		mov	R4, #0
+ 1024              	
+ 1025 058c 0C400BE5 		str	R4, [R11, #-12]
+ 1026              	L.45:
+ARM GAS  E:\diploma mpt\Final Codes\T'x\ADCKBDLCD.asm 			page 19
+
+
+ 1027              	
+ 1028              	@line 367,1		{
+ 1029              	
+ 1030              	.loc 1 367 1
+ 1031              	
+ 1032              	@line 368,6			if (str[k])
+ 1033              	
+ 1034              	.loc 1 368 6
+ 1035 0590 0C401BE5 		ldr	R4,[R11, #-12]
+ 1036 0594 04501BE5 		ldr	R5,[R11, #-4]
+ 1037 0598 054084E0 		add	R4, R4, R5
+ 1038 059c D040D4E1 		ldrsb	R4,[R4]
+ 1039 05a0 0050A0E3 		mov	R5, #0
+ 1040              	
+ 1041 05a4 050054E1 		cmp	R4,R5
+ 1042 05a8 7C01000A 		beq	L.52
+ 1043              	
+ 1044              	@line 369,3				LcdDat(str[k]) ;
+ 1045              	
+ 1046              	.loc 1 369 3
+ 1047 05ac 0C401BE5 		ldr	R4,[R11, #-12]
+ 1048 05b0 04501BE5 		ldr	R5,[R11, #-4]
+ 1049 05b4 054084E0 		add	R4, R4, R5
+ 1050 05b8 D040D4E1 		ldrsb	R4,[R4]
+ 1051 05bc FF0004E2 		and	R0,R4,#255
+ 1052 05c0 FEFFFFEB 		bl	LcdDat
+ 1053              	
+ 1054              	@line 371,3				break ;
+ 1055              	
+ 1056              	.loc 1 371 3
+ 1057              	L.50:
+ 1058              	
+ 1059              	@line 372,1		}
+ 1060              	
+ 1061              	.loc 1 372 1
+ 1062              	L.46:
+ 1063              	
+ 1064              	@line 366,22	
+ 1065              	.loc 1 366 22
+ 1066 05c4 0C401BE5 		ldr	R4,[R11, #-12]
+ 1067 05c8 014084E2 		add	R4, R4, #1
+ 1068 05cc 0C400BE5 		str	R4, [R11, #-12]
+ 1069              	
+ 1070              	@line 366,13	
+ 1071              	.loc 1 366 13
+ 1072 05d0 0C401BE5 		ldr	R4,[R11, #-12]
+ 1073 05d4 1050A0E3 		mov	R5, #16
+ 1074              	
+ 1075 05d8 050054E1 		cmp	R4,R5
+ 1076 05dc 620100BA 		blt	L.45
+ 1077 05e0 7C0100EA 		b	L.52
+ 1078              	L.51:
+ 1079              	
+ 1080              	@line 374,1		{
+ 1081              	
+ 1082              	.loc 1 374 1
+ 1083              	
+ARM GAS  E:\diploma mpt\Final Codes\T'x\ADCKBDLCD.asm 			page 20
+
+
+ 1084              	@line 375,2			LcdDat(' ') ;
+ 1085              	
+ 1086              	.loc 1 375 2
+ 1087 05e4 2000A0E3 		mov	R0, #32
+ 1088              	
+ 1089 05e8 FEFFFFEB 		bl	LcdDat
+ 1090              	
+ 1091              	@line 376,2			k ++ ;
+ 1092              	
+ 1093              	.loc 1 376 2
+ 1094 05ec 0C401BE5 		ldr	R4,[R11, #-12]
+ 1095 05f0 014084E2 		add	R4, R4, #1
+ 1096 05f4 0C400BE5 		str	R4, [R11, #-12]
+ 1097              	
+ 1098              	@line 377,1		}
+ 1099              	
+ 1100              	.loc 1 377 1
+ 1101              	L.52:
+ 1102              	
+ 1103              	@line 373,7	
+ 1104              	.loc 1 373 7
+ 1105 05f8 0C401BE5 		ldr	R4,[R11, #-12]
+ 1106 05fc 1050A0E3 		mov	R5, #16
+ 1107              	
+ 1108 0600 050054E1 		cmp	R4,R5
+ 1109 0604 770100BA 		blt	L.51
+ 1110              	
+ 1111              	@line 378,0	}
+ 1112              	
+ 1113              	.loc 1 378 0
+ 1114              	L.42:
+ 1115 0608 30A89BE8 		ldmfd	R11, {R4, R5, R11, sp, pc}
+ 1116              	
+ 1117              		.p2align 2
+ 1118              	
+ 1119              	
+ 1120              		.global keybord
+ 1121              		@------------- locals ---------------------
+ 1122              		@a -- R11 - (4)
+ 1123              		@b -- R11 - (8)
+ 1124              		@key -- R11 - (12)
+ 1125              	
+ 1126              		.p2align 2
+ 1127              	
+ 1128              		.text
+ 1129              	keybord:
+ 1130 060c 0DC0A0E1 		mov	R12, sp
+ 1131 0610 70582DE9 		stmfd	sp!, {R4, R5, R6, R11, R12, lr}
+ 1132 0614 0DB0A0E1 		mov R11,R13
+ 1133 0618 0CD04DE2 		sub	sp, sp, #3 * 4
+ 1134              	
+ 1135              	@line 389,0	{
+ 1136              	
+ 1137              	.loc 1 389 0
+ 1138              	
+ 1139              	@line 391,19	unsigned int a,key=15, b;
+ 1140              	
+ARM GAS  E:\diploma mpt\Final Codes\T'x\ADCKBDLCD.asm 			page 21
+
+
+ 1141              	.loc 1 391 19
+ 1142 061c 0F40A0E3 		mov	R4, #15
+ 1143              	
+ 1144 0620 0C400BE5 		str	R4, [R11, #-12]
+ 1145              	L.55:
+ 1146              	
+ 1147              	@line 394,0		P1=0x00000000;
+ 1148              	
+ 1149              	.loc 1 394 0
+ 1150 0624 58429FE5 		ldr	R4, LIT.keybord0+0
+ 1151 0628 0050A0E3 		mov	R5, #0
+ 1152              	
+ 1153 062c 005084E5 		str	R5, [R4]
+ 1154              	
+ 1155              	@line 395,0		PINSEL2 |=0x00000000;
+ 1156              	
+ 1157              	.loc 1 395 0
+ 1158 0630 50429FE5 		ldr	R4, LIT.keybord0+4
+ 1159 0634 005094E5 		ldr	R5,[R4]
+ 1160 0638 005084E5 		str	R5, [R4]
+ 1161              	
+ 1162              	@line 397,0		 IO1DIR |=0x000f0000;         	  //set rows as output
+ 1163              	
+ 1164              	.loc 1 397 0
+ 1165 063c 48429FE5 		ldr	R4, LIT.keybord0+8
+ 1166 0640 005094E5 		ldr	R5,[R4]
+ 1167 0644 44629FE5 		ldr	R6, LIT.keybord0+12
+ 1168 0648 065085E1 		orr R5, R5, R6
+ 1169 064c 005084E5 		str	R5, [R4]
+ 1170              	
+ 1171              	@line 400,0		IO1SET =0x00f00000;
+ 1172              	
+ 1173              	.loc 1 400 0
+ 1174 0650 3C429FE5 		ldr	R4, LIT.keybord0+16
+ 1175 0654 3C529FE5 		ldr	R5, LIT.keybord0+20
+ 1176 0658 005084E5 		str	R5, [R4]
+ 1177              	
+ 1178              	@line 401,0		IO1CLR =0x000f0000;		//all rows 0
+ 1179              	
+ 1180              	.loc 1 401 0
+ 1181 065c 38429FE5 		ldr	R4, LIT.keybord0+24
+ 1182 0660 28529FE5 		ldr	R5, LIT.keybord0+12
+ 1183 0664 005084E5 		str	R5, [R4]
+ 1184              	
+ 1185              	@line 404,1		delay();
+ 1186              	
+ 1187              	.loc 1 404 1
+ 1188 0668 FEFFFFEB 		bl	delay
+ 1189              	
+ 1190              	@line 405,1		a=P1 & 0x00f00000;
+ 1191              	
+ 1192              	.loc 1 405 1
+ 1193 066c 10429FE5 		ldr	R4, LIT.keybord0+0
+ 1194 0670 004094E5 		ldr	R4,[R4]
+ 1195 0674 1C529FE5 		ldr	R5, LIT.keybord0+20
+ 1196 0678 054004E0 		and R4, R4, R5
+ 1197 067c 04400BE5 		str	R4, [R11, #-4]
+ARM GAS  E:\diploma mpt\Final Codes\T'x\ADCKBDLCD.asm 			page 22
+
+
+ 1198              	
+ 1199              	@line 407,5		 if(a==0x00f00000)		//is key pressed?
+ 1200              	
+ 1201              	.loc 1 407 5
+ 1202 0680 04401BE5 		ldr	R4,[R11, #-4]
+ 1203 0684 0C529FE5 		ldr	R5, LIT.keybord0+20
+ 1204 0688 050054E1 		cmp	R4,R5
+ 1205 068c A301001A 		bne	L.56
+ 1206              	
+ 1207              	@line 408,2			goto up;
+ 1208              	
+ 1209              	.loc 1 408 2
+ 1210 0690 870100EA 		b	L.55
+ 1211              	L.56:
+ 1212              	
+ 1213              	@line 409,9		else if(a!=0x00f00000)
+ 1214              	
+ 1215              	.loc 1 409 9
+ 1216 0694 04401BE5 		ldr	R4,[R11, #-4]
+ 1217 0698 F8519FE5 		ldr	R5, LIT.keybord0+20
+ 1218 069c 050054E1 		cmp	R4,R5
+ 1219 06a0 A701000A 		beq	L.58
+ 1220              	
+ 1221              	@line 410,2			goto check;
+ 1222              	
+ 1223              	.loc 1 410 2
+ 1224              	L.58:
+ 1225              	L.60:
+ 1226              	
+ 1227              	@line 413,1		delay();			//keydebouncing delay
+ 1228              	
+ 1229              	.loc 1 413 1
+ 1230 06a4 FEFFFFEB 		bl	delay
+ 1231              	
+ 1232              	@line 414,0		IO1CLR=0x000f0000;
+ 1233              	
+ 1234              	.loc 1 414 0
+ 1235 06a8 EC419FE5 		ldr	R4, LIT.keybord0+24
+ 1236 06ac DC519FE5 		ldr	R5, LIT.keybord0+12
+ 1237 06b0 005084E5 		str	R5, [R4]
+ 1238              	
+ 1239              	@line 416,1		a=P1 & 0x00f00000;
+ 1240              	
+ 1241              	.loc 1 416 1
+ 1242 06b4 C8419FE5 		ldr	R4, LIT.keybord0+0
+ 1243 06b8 004094E5 		ldr	R4,[R4]
+ 1244 06bc D4519FE5 		ldr	R5, LIT.keybord0+20
+ 1245 06c0 054004E0 		and R4, R4, R5
+ 1246 06c4 04400BE5 		str	R4, [R11, #-4]
+ 1247              	
+ 1248              	@line 417,4		if(a!=0x00f00000){
+ 1249              	
+ 1250              	.loc 1 417 4
+ 1251 06c8 04401BE5 		ldr	R4,[R11, #-4]
+ 1252 06cc C4519FE5 		ldr	R5, LIT.keybord0+20
+ 1253 06d0 050054E1 		cmp	R4,R5
+ 1254 06d4 8701000A 		beq	L.55
+ARM GAS  E:\diploma mpt\Final Codes\T'x\ADCKBDLCD.asm 			page 23
+
+
+ 1255              	
+ 1256              	@line 417,18	
+ 1257              	.loc 1 417 18
+ 1258              	
+ 1259              	@line 419,2			goto check1;
+ 1260              	
+ 1261              	.loc 1 419 2
+ 1262              	
+ 1263              	@line 422,2			goto up;
+ 1264              	
+ 1265              	.loc 1 422 2
+ 1266              	L.63:
+ 1267              	
+ 1268              	@line 426,0		IO1CLR=0x00010000;		//row_0 set to 0
+ 1269              	
+ 1270              	.loc 1 426 0
+ 1271 06d8 BC419FE5 		ldr	R4, LIT.keybord0+24
+ 1272 06dc BC519FE5 		ldr	R5, LIT.keybord0+28
+ 1273 06e0 005084E5 		str	R5, [R4]
+ 1274              	
+ 1275              	@line 427,0		IO1SET=0x000e0000;
+ 1276              	
+ 1277              	.loc 1 427 0
+ 1278 06e4 A8419FE5 		ldr	R4, LIT.keybord0+16
+ 1279 06e8 B4519FE5 		ldr	R5, LIT.keybord0+32
+ 1280 06ec 005084E5 		str	R5, [R4]
+ 1281              	
+ 1282              	@line 429,1		a=P1 & 0x00f00000;
+ 1283              	
+ 1284              	.loc 1 429 1
+ 1285 06f0 8C419FE5 		ldr	R4, LIT.keybord0+0
+ 1286 06f4 004094E5 		ldr	R4,[R4]
+ 1287 06f8 98519FE5 		ldr	R5, LIT.keybord0+20
+ 1288 06fc 054004E0 		and R4, R4, R5
+ 1289 0700 04400BE5 		str	R4, [R11, #-4]
+ 1290              	
+ 1291              	@line 430,5		 if(a!=0x00f00000)
+ 1292              	
+ 1293              	.loc 1 430 5
+ 1294 0704 04401BE5 		ldr	R4,[R11, #-4]
+ 1295 0708 88519FE5 		ldr	R5, LIT.keybord0+20
+ 1296 070c 050054E1 		cmp	R4,R5
+ 1297 0710 C401000A 		beq	L.64
+ 1298              	
+ 1299              	@line 431,1		{
+ 1300              	
+ 1301              	.loc 1 431 1
+ 1302              	
+ 1303              	@line 433,2			goto row_0;
+ 1304              	
+ 1305              	.loc 1 433 2
+ 1306 0714 F40100EA 		b	L.66
+ 1307              	L.64:
+ 1308              	
+ 1309              	@line 440,0		IO1CLR=0x00020000;		//row_1 set to 0
+ 1310              	
+ 1311              	.loc 1 440 0
+ARM GAS  E:\diploma mpt\Final Codes\T'x\ADCKBDLCD.asm 			page 24
+
+
+ 1312 0718 7C419FE5 		ldr	R4, LIT.keybord0+24
+ 1313 071c 84519FE5 		ldr	R5, LIT.keybord0+36
+ 1314 0720 005084E5 		str	R5, [R4]
+ 1315              	
+ 1316              	@line 441,0		IO1SET=0x000d0000;
+ 1317              	
+ 1318              	.loc 1 441 0
+ 1319 0724 68419FE5 		ldr	R4, LIT.keybord0+16
+ 1320 0728 7C519FE5 		ldr	R5, LIT.keybord0+40
+ 1321 072c 005084E5 		str	R5, [R4]
+ 1322              	
+ 1323              	@line 443,1		a=P1 & 0x00f00000;
+ 1324              	
+ 1325              	.loc 1 443 1
+ 1326 0730 4C419FE5 		ldr	R4, LIT.keybord0+0
+ 1327 0734 004094E5 		ldr	R4,[R4]
+ 1328 0738 58519FE5 		ldr	R5, LIT.keybord0+20
+ 1329 073c 054004E0 		and R4, R4, R5
+ 1330 0740 04400BE5 		str	R4, [R11, #-4]
+ 1331              	
+ 1332              	@line 444,5		 if(a!=0x00f00000)
+ 1333              	
+ 1334              	.loc 1 444 5
+ 1335 0744 04401BE5 		ldr	R4,[R11, #-4]
+ 1336 0748 48519FE5 		ldr	R5, LIT.keybord0+20
+ 1337 074c 050054E1 		cmp	R4,R5
+ 1338 0750 D401000A 		beq	L.67
+ 1339              	
+ 1340              	@line 445,1		{
+ 1341              	
+ 1342              	.loc 1 445 1
+ 1343              	
+ 1344              	@line 447,2			goto row_1;
+ 1345              	
+ 1346              	.loc 1 447 2
+ 1347 0754 F70100EA 		b	L.69
+ 1348              	L.67:
+ 1349              	
+ 1350              	@line 452,0		IO1CLR=0x00040000;		//row_2 set to 0
+ 1351              	
+ 1352              	.loc 1 452 0
+ 1353 0758 3C419FE5 		ldr	R4, LIT.keybord0+24
+ 1354 075c 4C519FE5 		ldr	R5, LIT.keybord0+44
+ 1355 0760 005084E5 		str	R5, [R4]
+ 1356              	
+ 1357              	@line 453,0		IO1SET=0x000b0000;
+ 1358              	
+ 1359              	.loc 1 453 0
+ 1360 0764 28419FE5 		ldr	R4, LIT.keybord0+16
+ 1361 0768 44519FE5 		ldr	R5, LIT.keybord0+48
+ 1362 076c 005084E5 		str	R5, [R4]
+ 1363              	
+ 1364              	@line 455,1		a=P1 & 0x00f00000;
+ 1365              	
+ 1366              	.loc 1 455 1
+ 1367 0770 0C419FE5 		ldr	R4, LIT.keybord0+0
+ 1368 0774 004094E5 		ldr	R4,[R4]
+ARM GAS  E:\diploma mpt\Final Codes\T'x\ADCKBDLCD.asm 			page 25
+
+
+ 1369 0778 18519FE5 		ldr	R5, LIT.keybord0+20
+ 1370 077c 054004E0 		and R4, R4, R5
+ 1371 0780 04400BE5 		str	R4, [R11, #-4]
+ 1372              	
+ 1373              	@line 456,5		 if(a!=0x00f00000)
+ 1374              	
+ 1375              	.loc 1 456 5
+ 1376 0784 04401BE5 		ldr	R4,[R11, #-4]
+ 1377 0788 08519FE5 		ldr	R5, LIT.keybord0+20
+ 1378 078c 050054E1 		cmp	R4,R5
+ 1379 0790 E401000A 		beq	L.70
+ 1380              	
+ 1381              	@line 457,1		{
+ 1382              	
+ 1383              	.loc 1 457 1
+ 1384              	
+ 1385              	@line 459,2			goto row_2;
+ 1386              	
+ 1387              	.loc 1 459 2
+ 1388 0794 FA0100EA 		b	L.72
+ 1389              	L.70:
+ 1390              	
+ 1391              	@line 464,0		IO1CLR=0x00080000;		//row_3 set to 0
+ 1392              	
+ 1393              	.loc 1 464 0
+ 1394 0798 FC409FE5 		ldr	R4, LIT.keybord0+24
+ 1395 079c 14519FE5 		ldr	R5, LIT.keybord0+52
+ 1396 07a0 005084E5 		str	R5, [R4]
+ 1397              	
+ 1398              	@line 465,0		IO1SET=0x00070000;
+ 1399              	
+ 1400              	.loc 1 465 0
+ 1401 07a4 E8409FE5 		ldr	R4, LIT.keybord0+16
+ 1402 07a8 0C519FE5 		ldr	R5, LIT.keybord0+56
+ 1403 07ac 005084E5 		str	R5, [R4]
+ 1404              	
+ 1405              	@line 467,1		a=P1 & 0x00f00000;
+ 1406              	
+ 1407              	.loc 1 467 1
+ 1408 07b0 CC409FE5 		ldr	R4, LIT.keybord0+0
+ 1409 07b4 004094E5 		ldr	R4,[R4]
+ 1410 07b8 D8509FE5 		ldr	R5, LIT.keybord0+20
+ 1411 07bc 054004E0 		and R4, R4, R5
+ 1412 07c0 04400BE5 		str	R4, [R11, #-4]
+ 1413              	
+ 1414              	@line 468,5		 if(a!=0x00f00000)
+ 1415              	
+ 1416              	.loc 1 468 5
+ 1417 07c4 04401BE5 		ldr	R4,[R11, #-4]
+ 1418 07c8 C8509FE5 		ldr	R5, LIT.keybord0+20
+ 1419 07cc 050054E1 		cmp	R4,R5
+ 1420 07d0 8701000A 		beq	L.55
+ 1421              	
+ 1422              	@line 469,1		{
+ 1423              	
+ 1424              	.loc 1 469 1
+ 1425              	
+ARM GAS  E:\diploma mpt\Final Codes\T'x\ADCKBDLCD.asm 			page 26
+
+
+ 1426              	@line 471,2			goto row_3;
+ 1427              	
+ 1428              	.loc 1 471 2
+ 1429 07d4 FD0100EA 		b	L.75
+ 1430              	
+ 1431              	@line 476,1		goto up;
+ 1432              	
+ 1433              	.loc 1 476 1
+ 1434              	L.66:
+ 1435              	
+ 1436              	@line 479,2			b=0;
+ 1437              	
+ 1438              	.loc 1 479 2
+ 1439 07d8 0040A0E3 		mov	R4, #0
+ 1440              	
+ 1441 07dc 08400BE5 		str	R4, [R11, #-8]
+ 1442              	
+ 1443              	@line 480,4	  		goto down;
+ 1444              	
+ 1445              	.loc 1 480 4
+ 1446 07e0 FF0100EA 		b	L.76
+ 1447              	L.69:
+ 1448              	
+ 1449              	@line 482,2			b=4;
+ 1450              	
+ 1451              	.loc 1 482 2
+ 1452 07e4 0440A0E3 		mov	R4, #4
+ 1453              	
+ 1454 07e8 08400BE5 		str	R4, [R11, #-8]
+ 1455              	
+ 1456              	@line 483,4	  		goto down;
+ 1457              	
+ 1458              	.loc 1 483 4
+ 1459 07ec FF0100EA 		b	L.76
+ 1460              	L.72:
+ 1461              	
+ 1462              	@line 485,2			b=8;
+ 1463              	
+ 1464              	.loc 1 485 2
+ 1465 07f0 0840A0E3 		mov	R4, #8
+ 1466              	
+ 1467 07f4 08400BE5 		str	R4, [R11, #-8]
+ 1468              	
+ 1469              	@line 486,4	  		goto down;
+ 1470              	
+ 1471              	.loc 1 486 4
+ 1472 07f8 FF0100EA 		b	L.76
+ 1473              	L.75:
+ 1474              	
+ 1475              	@line 488,2			b=12;
+ 1476              	
+ 1477              	.loc 1 488 2
+ 1478 07fc 0C40A0E3 		mov	R4, #12
+ 1479              	
+ 1480 0800 08400BE5 		str	R4, [R11, #-8]
+ 1481              	L.76:
+ 1482              	
+ARM GAS  E:\diploma mpt\Final Codes\T'x\ADCKBDLCD.asm 			page 27
+
+
+ 1483              	@line 493,4		if(a==0x00e00000)
+ 1484              	
+ 1485              	.loc 1 493 4
+ 1486 0804 04401BE5 		ldr	R4,[R11, #-4]
+ 1487 0808 B0509FE5 		ldr	R5, LIT.keybord0+60
+ 1488 080c 050054E1 		cmp	R4,R5
+ 1489 0810 0702001A 		bne	L.77
+ 1490              	
+ 1491              	@line 494,1		{
+ 1492              	
+ 1493              	.loc 1 494 1
+ 1494              	
+ 1495              	@line 496,2			b=b+3;
+ 1496              	
+ 1497              	.loc 1 496 2
+ 1498 0814 08401BE5 		ldr	R4,[R11, #-8]
+ 1499 0818 034084E2 		add	R4, R4, #3
+ 1500 081c 08400BE5 		str	R4, [R11, #-8]
+ 1501              	
+ 1502              	@line 498,2			}
+ 1503              	
+ 1504              	.loc 1 498 2
+ 1505 0820 1D0200EA 		b	L.78
+ 1506              	L.77:
+ 1507              	
+ 1508              	@line 499,9		else if(a==0x00d00000)
+ 1509              	
+ 1510              	.loc 1 499 9
+ 1511 0824 04401BE5 		ldr	R4,[R11, #-4]
+ 1512 0828 94509FE5 		ldr	R5, LIT.keybord0+64
+ 1513 082c 050054E1 		cmp	R4,R5
+ 1514 0830 0F02001A 		bne	L.79
+ 1515              	
+ 1516              	@line 500,1		{
+ 1517              	
+ 1518              	.loc 1 500 1
+ 1519              	
+ 1520              	@line 502,2			b=b+2;
+ 1521              	
+ 1522              	.loc 1 502 2
+ 1523 0834 08401BE5 		ldr	R4,[R11, #-8]
+ 1524 0838 024084E2 		add	R4, R4, #2
+ 1525 083c 08400BE5 		str	R4, [R11, #-8]
+ 1526              	
+ 1527              	@line 504,2			}
+ 1528              	
+ 1529              	.loc 1 504 2
+ 1530 0840 1D0200EA 		b	L.80
+ 1531              	L.79:
+ 1532              	
+ 1533              	@line 505,9		else if(a==0x00b00000)
+ 1534              	
+ 1535              	.loc 1 505 9
+ 1536 0844 04401BE5 		ldr	R4,[R11, #-4]
+ 1537 0848 78509FE5 		ldr	R5, LIT.keybord0+68
+ 1538 084c 050054E1 		cmp	R4,R5
+ 1539 0850 1702001A 		bne	L.81
+ARM GAS  E:\diploma mpt\Final Codes\T'x\ADCKBDLCD.asm 			page 28
+
+
+ 1540              	
+ 1541              	@line 506,1		{
+ 1542              	
+ 1543              	.loc 1 506 1
+ 1544              	
+ 1545              	@line 508,2			b=b+1;
+ 1546              	
+ 1547              	.loc 1 508 2
+ 1548 0854 08401BE5 		ldr	R4,[R11, #-8]
+ 1549 0858 014084E2 		add	R4, R4, #1
+ 1550 085c 08400BE5 		str	R4, [R11, #-8]
+ 1551              	
+ 1552              	@line 510,2			}
+ 1553              	
+ 1554              	.loc 1 510 2
+ 1555 0860 1D0200EA 		b	L.82
+ 1556              	L.81:
+ 1557              	
+ 1558              	@line 511,9		else if(a==0x00700000)
+ 1559              	
+ 1560              	.loc 1 511 9
+ 1561 0864 04401BE5 		ldr	R4,[R11, #-4]
+ 1562 0868 5C509FE5 		ldr	R5, LIT.keybord0+72
+ 1563 086c 050054E1 		cmp	R4,R5
+ 1564 0870 8701001A 		bne	L.55
+ 1565              	
+ 1566              	@line 512,1		{
+ 1567              	
+ 1568              	.loc 1 512 1
+ 1569              	
+ 1570              	@line 514,2			b=b;	
+ 1571              	
+ 1572              	.loc 1 514 2
+ 1573 0874 08401BE5 		ldr	R4,[R11, #-8]
+ 1574 0878 08400BE5 		str	R4, [R11, #-8]
+ 1575              	
+ 1576              	@line 516,2			}
+ 1577              	
+ 1578              	.loc 1 516 2
+ 1579              	
+ 1580              	@line 517,6		else goto up;	
+ 1581              	
+ 1582              	.loc 1 517 6
+ 1583              	L.84:
+ 1584              	L.82:
+ 1585              	L.80:
+ 1586              	L.78:
+ 1587              	
+ 1588              	@line 523,7		return(b);
+ 1589              	
+ 1590              	.loc 1 523 7
+ 1591 087c 08001BE5 		ldr	R0,[R11, #-8]
+ 1592              	L.54:
+ 1593 0880 70A89BE8 		ldmfd	R11, {R4, R5, R6, R11, sp, pc}
+ 1594              	
+ 1595              		.p2align 2
+ 1596              	LIT.keybord0:
+ARM GAS  E:\diploma mpt\Final Codes\T'x\ADCKBDLCD.asm 			page 29
+
+
+ 1597 0884 108002E0 		.word 0xE0028010
+ 1598 0888 14C002E0 		.word 0xE002C014
+ 1599 088c 188002E0 		.word 0xE0028018
+ 1600 0890 00000F00 		.word 0xF0000
+ 1601 0894 148002E0 		.word 0xE0028014
+ 1602 0898 0000F000 		.word 0xF00000
+ 1603 089c 1C8002E0 		.word 0xE002801C
+ 1604 08a0 00000100 		.word 0x10000
+ 1605 08a4 00000E00 		.word 0xE0000
+ 1606 08a8 00000200 		.word 0x20000
+ 1607 08ac 00000D00 		.word 0xD0000
+ 1608 08b0 00000400 		.word 0x40000
+ 1609 08b4 00000B00 		.word 0xB0000
+ 1610 08b8 00000800 		.word 0x80000
+ 1611 08bc 00000700 		.word 0x70000
+ 1612 08c0 0000E000 		.word 0xE00000
+ 1613 08c4 0000D000 		.word 0xD00000
+ 1614 08c8 0000B000 		.word 0xB00000
+ 1615 08cc 00007000 		.word 0x700000
+ 1616              	
+ 1617              	
+ 1618              	
+ 1619              		.global delay
+ 1620              		@------------- locals ---------------------
+ 1621              		@aa -- R11 - (8)
+ 1622              		@bb -- R11 - (4)
+ 1623              	
+ 1624              		.p2align 2
+ 1625              	
+ 1626              		.text
+ 1627              	delay:
+ 1628 08d0 0DC0A0E1 		mov	R12, sp
+ 1629 08d4 30582DE9 		stmfd	sp!, {R4, R5, R11, R12, lr}
+ 1630 08d8 0DB0A0E1 		mov R11,R13
+ 1631 08dc 08D04DE2 		sub	sp, sp, #2 * 4
+ 1632              	
+ 1633              	@line 529,0	{
+ 1634              	
+ 1635              	.loc 1 529 0
+ 1636              	
+ 1637              	@line 531,4	for(aa=0;aa<100;aa++)
+ 1638              	
+ 1639              	.loc 1 531 4
+ 1640 08e0 0040A0E3 		mov	R4, #0
+ 1641              	
+ 1642 08e4 08400BE5 		str	R4, [R11, #-8]
+ 1643              	L.86:
+ 1644              	
+ 1645              	@line 532,1		{
+ 1646              	
+ 1647              	.loc 1 532 1
+ 1648              	
+ 1649              	@line 533,5		for(bb=0;bb<100;bb++)
+ 1650              	
+ 1651              	.loc 1 533 5
+ 1652 08e8 0040A0E3 		mov	R4, #0
+ 1653              	
+ARM GAS  E:\diploma mpt\Final Codes\T'x\ADCKBDLCD.asm 			page 30
+
+
+ 1654 08ec 04400BE5 		str	R4, [R11, #-4]
+ 1655              	L.90:
+ 1656              	
+ 1657              	@line 534,2			{
+ 1658              	
+ 1659              	.loc 1 534 2
+ 1660              	
+ 1661              	@line 535,2			}
+ 1662              	
+ 1663              	.loc 1 535 2
+ 1664              	L.91:
+ 1665              	
+ 1666              	@line 533,17	
+ 1667              	.loc 1 533 17
+ 1668 08f0 04401BE5 		ldr	R4,[R11, #-4]
+ 1669 08f4 014084E2 		add	R4, R4, #1
+ 1670 08f8 04400BE5 		str	R4, [R11, #-4]
+ 1671              	
+ 1672              	@line 533,10	
+ 1673              	.loc 1 533 10
+ 1674 08fc 04401BE5 		ldr	R4,[R11, #-4]
+ 1675 0900 6450A0E3 		mov	R5, #100
+ 1676              	
+ 1677 0904 050054E1 		cmp	R4,R5
+ 1678 0908 3A0200BA 		blt	L.90
+ 1679              	
+ 1680              	@line 536,0	}
+ 1681              	
+ 1682              	.loc 1 536 0
+ 1683              	L.87:
+ 1684              	
+ 1685              	@line 531,16	
+ 1686              	.loc 1 531 16
+ 1687 090c 08401BE5 		ldr	R4,[R11, #-8]
+ 1688 0910 014084E2 		add	R4, R4, #1
+ 1689 0914 08400BE5 		str	R4, [R11, #-8]
+ 1690              	
+ 1691              	@line 531,9	
+ 1692              	.loc 1 531 9
+ 1693 0918 08401BE5 		ldr	R4,[R11, #-8]
+ 1694 091c 6450A0E3 		mov	R5, #100
+ 1695              	
+ 1696 0920 050054E1 		cmp	R4,R5
+ 1697 0924 380200BA 		blt	L.86
+ 1698              	
+ 1699              	@line 537,7	return 0;
+ 1700              	
+ 1701              	.loc 1 537 7
+ 1702 0928 0000A0E3 		mov	R0, #0
+ 1703              	
+ 1704              	L.85:
+ 1705 092c 30A89BE8 		ldmfd	R11, {R4, R5, R11, sp, pc}
+ 1706              	
+ 1707              		.p2align 2
+ 1708              	
+ 1709              		.extern b 1
